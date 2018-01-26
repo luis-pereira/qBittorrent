@@ -40,6 +40,7 @@
 #include <QRegularExpression>
 
 #include "base/bittorrent/session.h"
+#include "base/global.h"
 #include "base/net/portforwarder.h"
 #include "base/net/proxyconfigurationmanager.h"
 #include "base/preferences.h"
@@ -177,7 +178,7 @@ QByteArray prefjson::getPreferences()
     data["bypass_local_auth"] = !pref->isWebUiLocalAuthEnabled();
     data["bypass_auth_subnet_whitelist_enabled"] = pref->isWebUiAuthSubnetWhitelistEnabled();
     QStringList authSubnetWhitelistStringList;
-    for (const Utils::Net::Subnet &subnet : pref->getWebUiAuthSubnetWhitelist())
+    for (const Utils::Net::Subnet &subnet : constify(pref->getWebUiAuthSubnetWhitelist()))
         authSubnetWhitelistStringList << Utils::Net::subnetToString(subnet);
     data["bypass_auth_subnet_whitelist"] = authSubnetWhitelistStringList.join("\n");
     // Update my dynamic domain name

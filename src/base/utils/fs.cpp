@@ -50,6 +50,7 @@
 #endif
 
 #include "base/bittorrent/torrenthandle.h"
+#include "base/global.h"
 
 /**
  * Converts a path to a string suitable for display.
@@ -123,7 +124,7 @@ bool Utils::Fs::smartRemoveEmptyFolderTree(const QString &path)
     std::sort(dirList.begin(), dirList.end()
               , [](const QString &l, const QString &r) { return l.count("/") > r.count("/"); });
 
-    for (const QString &p : dirList) {
+    for (const QString &p : constify(dirList)) {
         // remove unwanted files
         for (const QString &f : deleteFilesList) {
             forceRemove(p + f);
