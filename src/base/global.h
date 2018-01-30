@@ -26,5 +26,19 @@
  * exception statement from your version.
  */
 
+#pragma once
+
 const char C_TORRENT_FILE_EXTENSION[] = ".torrent";
 
+
+// adds const to non-const objects (like std::as_const or qAsConst)
+template <typename T>
+constexpr typename std::add_const<T>::type &constify(T &t) noexcept { return t; }
+
+// unlike std::as_const or qAsConst it works with rvalues
+template <typename T>
+constexpr typename std::add_const<T>::type constify(T &&t) noexcept { return std::move(t); }
+
+// prevent const lvalue arguments
+template <typename T>
+constexpr typename std::add_const<T>::type &constify(const T &t) = delete;
