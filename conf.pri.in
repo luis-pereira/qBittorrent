@@ -7,6 +7,12 @@ MANPREFIX = @EXPAND_MANDIR@
 
 QMAKE_CXXFLAGS += @QBT_CONF_EXTRA_CFLAGS@
 
+message("(lpereira) QMAKE_CXX: $$QMAKE_CXX")
+gcc | clang {
+    COMPILER_VERSION = $$system($$QMAKE_CXX " -dumpversion")
+    message("(lpereira) COMPILER_VERSION: $$COMPILER_VERSION")
+}
+
 EXTERNAL_INCLUDES = @QBT_CONF_INCLUDES@
 EXTERNAL_INCLUDES -= $$QMAKE_DEFAULT_INCDIRS
 # added /usr/local/include due to Qt 5.7.0 bug on macOS

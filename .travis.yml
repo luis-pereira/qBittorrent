@@ -179,6 +179,7 @@ script:
         sed -i "" -e "s/^\(CXX.*&&\).*$/\1 $CXX/" src/Makefile
         sed -i "" -e 's/^\(CXXFLAGS.*\)$/\1 -Wno-unused-local-typedefs -Wno-inconsistent-missing-override/' src/Makefile
       else
+        $CXX -dumpversion
         ./bootstrap.sh && ./configure $qbtconf
       fi
       BUILD_TOOL="make"
