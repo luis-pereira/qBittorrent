@@ -37,7 +37,7 @@ endif(WIN32)
 include(CMakeDependentOption)
 
 option(SYSTEM_QTSINGLEAPPLICATION
-    "Use the system qtsingleapplication library or shipped one otherwise")
+    "Use the system qtsingleapplication library or shipped one otherwise" OFF)
 
 option(GUI "Allows to disable GUI for headless running. Disables QtDBus and the GeoIP Database" ON)
 
