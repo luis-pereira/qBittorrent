@@ -5,7 +5,6 @@ add_definitions(-DBOOST_NO_CXX11_RVALUE_REFERENCES)
 include(MacroQbtCompilerSettings)
 qbt_set_compiler_options()
 
-include(MacroLinkQtComponents)
 include(QbtTargetSources)
 
 find_package(LibtorrentRasterbar REQUIRED)
