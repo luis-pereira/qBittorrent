@@ -5,6 +5,10 @@ os:
   - osx
 osx_image: xcode7.3
 
+compiler:
+  - gcc
+  - clang
+
 env:
   matrix:
     # Uncomment when Travis upgraded "Ubuntu 12.04 LTS" to a newer version whose repo will have a more up-to-date libtorrent package
