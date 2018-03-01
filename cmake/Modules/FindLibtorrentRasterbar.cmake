@@ -12,7 +12,7 @@
 #  LibtorrentRasterbar_OPENSSL_ENABLED - libtorrent-rasterbar uses and links against OpenSSL
 
 find_package(Threads REQUIRED)
-find_package(PkgConfig QUIET)
+find_package(PkgConfig REQUIRED)
 
 macro(_detect_boost_components _outComponets librariesList)
     string(REGEX MATCHALL "boost_[a-z_]+[-a-z]*" _boost_libraries "${librariesList}")
@@ -23,14 +23,17 @@ if(PKG_CONFIG_FOUND)
     pkg_check_modules(PC_LIBTORRENT_RASTERBAR QUIET libtorrent-rasterbar)
 endif()
 
+message(STATUS "=========== Use STATIC_LIBS: ${LibtorrentRasterbar_USE_STATIC_LIBS}")
 if(LibtorrentRasterbar_USE_STATIC_LIBS)
     set(LibtorrentRasterbar_ORIG_CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_FIND_LIBRARY_SUFFIXES})
     set(CMAKE_FIND_LIBRARY_SUFFIXES ${CMAKE_STATIC_LIBRARY_SUFFIX})
 endif()
 
+message(STATUS "PC_LIBTORRENT_RASTERBAR_FOUND: ${PC_LIBTORRENT_RASTERBAR_FOUND}")
 if(PC_LIBTORRENT_RASTERBAR_FOUND)
     set(LibtorrentRasterbar_DEFINITIONS ${PC_LIBTORRENT_RASTERBAR_CFLAGS})
 else()
+    message(STATUS "LibtorrentRasterbar_CUSTOM_DEFINITIONS: ${LibtorrentRasterbar_CUSTOM_DEFINITIONS}")
     if(LibtorrentRasterbar_CUSTOM_DEFINITIONS)
         set(LibtorrentRasterbar_DEFINITIONS ${LibtorrentRasterbar_CUSTOM_DEFINITIONS})
     else()
@@ -68,11 +71,14 @@ set(LibtorrentRasterbar_LIBRARIES ${LibtorrentRasterbar_LIBRARY} ${CMAKE_THREAD_
 set(LibtorrentRasterbar_INCLUDE_DIRS ${LibtorrentRasterbar_INCLUDE_DIR})
 
 # Without pkg-config, we can't possibly figure out the correct boost dependencies
+message(STATUS "LibtorrentRasterbar_CUSTOM_BOOST_DEPENDENCIES: ${LibtorrentRasterbar_CUSTOM_BOOST_DEPENDENCIES}")
 if (LibtorrentRasterbar_CUSTOM_BOOST_DEPENDENCIES)
     set(_boost_components "${LibtorrentRasterbar_CUSTOM_BOOST_DEPENDENCIES}")
 else(LibtorrentRasterbar_CUSTOM_BOOST_DEPENDENCIES)
     if(PC_LIBTORRENT_RASTERBAR_FOUND)
         _detect_boost_components(_boost_components "${PC_LIBTORRENT_RASTERBAR_LIBRARIES}")
+        message(STATUS "PC_LIBTORRENT_RASTERBAR_LIBRARIES: ${PC_LIBTORRENT_RASTERBAR_LIBRARIES}")
+        message(STATUS "_boost_components: ${_boost_components}")
     else()
         # all possible boost dependencies
         set(_boost_components

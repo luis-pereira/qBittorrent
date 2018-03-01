@@ -6,9 +6,9 @@
 # Set visibility to hidden to hide symbols, unless they're exported manually
 # in the code
 #-----------------------------------------------------------------------------
-set(CMAKE_C_VISIBILITY_PRESET hidden)
-set(CMAKE_CXX_VISIBILITY_PRESET hidden)
-set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
+#set(CMAKE_C_VISIBILITY_PRESET hidden)
+#set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+#set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
@@ -59,6 +59,8 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR "${CMAKE_CXX_COMPILER_ID}" STREQ
     endif (CMAKE_SYSTEM_NAME MATCHES Linux)
 
     if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+        string(REPLACE "-Wl,--no-undefined" "" CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS}")
+        string(REPLACE "-Wl,--no-undefined" "" CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS}")
         # Clang 5.0 still doesn't support -Wstrict-null-sentinel
         check_cxx_compiler_flag(-Wstrict-null-sentinel _STRICT_NULL_SENTINEL_IS_SUPPORTED)
         if (_STRICT_NULL_SENTINEL_IS_SUPPORTED)
