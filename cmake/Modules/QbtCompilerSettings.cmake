@@ -2,6 +2,15 @@
 # compiler flags for C and C++ (QBT_ADDITONAL_FLAGS) and for C++ only (QBT_ADDITONAL_CXX_FLAGS)
 # and appends them to CMAKE_XXX_FLAGS variables.
 
+#-----------------------------------------------------------------------------
+# Set visibility to hidden to hide symbols, unless they're exported manually
+# in the code
+#-----------------------------------------------------------------------------
+set(CMAKE_C_VISIBILITY_PRESET hidden)
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
+
+
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     #-Wshadow -Wconversion ?
     set(_GCC_COMMON_C_AND_CXX_FLAGS "-Wall -Wextra"
